@@ -8,20 +8,18 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from tqdm import trange
 from dataset import Ponzi, Phish
-from rcvae import RCVAE
+from icvae import ICVAE
 from utils import get_parser, one_hot, mkdir
 
 warnings.filterwarnings("ignore")
 exc_path = sys.path[0]
 
 
-def loss_fn(recon_x, x, mean, log_var, BCEloss, KLDloss):
+def loss_fn(recon_x, x, mean, log_var):
     x = torch.nn.functional.sigmoid(x)
     BCE = torch.nn.functional.binary_cross_entropy(recon_x, x, reduction='mean')
     KLD = -0.5 * torch.sum(1 + log_var - mean.pow(2) - log_var.exp())
-    BCEloss += BCE
-    KLDloss += KLD
-    return (BCE + KLD) / x.size(0), BCEloss, KLDloss
+    return (BCE + KLD) / x.size(0)
 
 
 def generated_generator_sixedges(args, data, device):
@@ -55,32 +53,23 @@ def generated_generator_sixedges(args, data, device):
     cvae_dataset_dataloader = DataLoader(cvae_dataset, sampler=cvae_dataset_sampler, batch_size=args.batch_size)
 
     # Pretrain
-    cvae = RCVAE(encoder_layer_sizes=[data[target_node].x.shape[1], 64],
+    cvae = ICVAE(encoder_layer_sizes=[data[target_node].x.shape[1], 64],
                  latent_size=50,
                  decoder_layer_sizes=[64, data[target_node].x.shape[1]],
                  edge_type_size=data.edge_types,
                  conditional_size=data[target_node].x.shape[1])
-    cvae_optimizer = optim.Adam(cvae.parameters(), lr=args.lr)
+    cvae_optimizer = optim.Adam(cvae.parameters(), lr=0.01)
     cvae.to(device)
 
     for _ in trange(args.pretrain_epochs, desc='Run CVAE Train'):
-        loss = 0
-        BCEloss = 0
-        KLDloss = 0
-        batch = 0
         for _, (x, c, e) in enumerate(cvae_dataset_dataloader):
-            batch += 1
             cvae.train()
             x, c, e = x.to(device), c.to(device), e.to(device)
             recon_x, mean, log_var, _ = cvae(x, c, e)
-            cvae_loss, BCEloss, KLDloss = loss_fn(recon_x, x, mean, log_var, BCEloss, KLDloss)
-            loss += cvae_loss
+            cvae_loss = loss_fn(recon_x, x, mean, log_var)
             cvae_optimizer.zero_grad()
             cvae_loss.backward()
             cvae_optimizer.step()
-        print("loss:", loss / batch)
-        print("BCEloss:", BCEloss / batch)
-        print("KLDloss:", KLDloss / batch)
     return cvae
 
 

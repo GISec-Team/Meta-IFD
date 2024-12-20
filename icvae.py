@@ -1,10 +1,9 @@
-# Adapted from https://github.com/timbmg/VAE-CVAE-MNIST
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
-class RCVAE(nn.Module):
+class ICVAE(nn.Module):
 
     def __init__(self, encoder_layer_sizes, latent_size, decoder_layer_sizes, edge_type_size,
                  conditional=True, conditional_size=0):
