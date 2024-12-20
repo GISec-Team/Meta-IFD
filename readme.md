@@ -29,7 +29,7 @@ and saves the graph to `/data`.
 
 ## Usage
 
-1. Run `rcvae_pertrain.py` to pretrain the generative model, and save the model to `/pretrain_model/`.
+1. Run `icvae_pertrain.py` to pretrain the generative model, and save the model to `/pretrain_model/`.
 2. Run `run.py` to execute the multi-view Ethereum interaction feature learning and fraud detection, 
 
 ```bash
