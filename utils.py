@@ -1,29 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-'''
-@author: jcx
-@contact: 2112103081@zjut.edu.cn
-@file: utils.py
-@time: 2023/4/12 14:27
-@desc:
-'''
 import argparse
 import os
 import random
-import torch.nn.functional as F
-from torch_geometric.data import Data, HeteroData
-import warnings
-from typing import List, Optional, Tuple, Union
-from torch_sparse import SparseTensor
-from torch_geometric.transforms import BaseTransform
-from torch_geometric.typing import EdgeType
-from torch_geometric.utils import coalesce, degree
-import os.path as osp
-from itertools import product
+from typing import Optional
 import torch
 import numpy as np
-from torch_geometric.data import (InMemoryDataset, HeteroData, download_url,
-                                  extract_zip)
 from torch import Tensor
 
 

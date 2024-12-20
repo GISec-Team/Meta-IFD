@@ -1,29 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-'''
-@author: jcx
-@contact: 2112103081@zjut.edu.cn
-@file: dataset.py
-@time: 2023/4/12 14:27
-@desc:
-'''
-import random
-import sys
-from typing import Optional, Callable, List
-
+from typing import Callable, Optional
 import pandas as pd
 import torch.nn.functional as F
-from typing import List, Optional, Tuple, Union
 import os.path as osp
 import torch
 import numpy as np
-import torch_geometric.transforms
-from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.model_selection import train_test_split
 from torch_geometric.io import read_txt_array
-from torch_geometric.data import (InMemoryDataset, HeteroData, download_url,
-                                  extract_zip)
-from torch_geometric.transforms import RemoveIsolatedNodes
-
+from torch_geometric.data import (InMemoryDataset, HeteroData)
 from utils import get_parser, seed_everything
 
 
