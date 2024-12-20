@@ -1,15 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-'''
-@author: jcx
-@contact: 2112103081@zjut.edu.cn
-@file: HLA.py.py
-@time: 2023/4/12 14:27
-@desc:
-'''
 import math
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
 import copy
 import time
