@@ -43,9 +43,13 @@ python run.py  --dataset Phish \
 ## Reference
 ````bash
 @article{jin2024enhancing,
-  title={Enhancing Ethereum Fraud Detection via Generative and Contrastive Self-supervision},
   author={Jin, Chengxiang and Zhou, Jiajun and Xie, Chenxuan and Yu, Shanqing and Xuan, Qi and Yang, Xiaoniu},
-  journal={arXiv preprint arXiv:2408.00641},
-  year={2024}
+  journal={IEEE Transactions on Information Forensics and Security}, 
+  title={Enhancing Ethereum Fraud Detection via Generative and Contrastive Self-Supervision}, 
+  volume={20},
+  number={},
+  pages={839-853},
+  year={2024},
+  doi={10.1109/TIFS.2024.3521611}
 }
 ````
